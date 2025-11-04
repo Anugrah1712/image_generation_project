@@ -1,0 +1,6 @@
+weights/
+gfpgan/weights/
+outputs/
+uploads/
+__pycache__/
+
