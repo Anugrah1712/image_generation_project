@@ -1,0 +1,42 @@
+# Databricks App Configuration
+# Place this at the root of your GitHub project (next to frontend/ and backend/ folders)
+
+name: imagegenerator-app
+description: Full-stack Image Generator (FastAPI + React) deployed on Databricks Apps
+runtime: python:3.10
+
+# Define how to build and run both frontend and backend
+build:
+  commands:
+    # 1️⃣ Install dependencies for backend
+    - cd backend
+    - pip install -r requirements.txt
+
+    # 2️⃣ Install dependencies and build frontend
+    - cd ../frontend
+    - npm install
+    - npm run build
+
+run:
+  commands:
+    # 3️⃣ Start the backend API
+    - cd backend
+    - uvicorn main:app --host 0.0.0.0 --port 8000 &
+
+    # 4️⃣ Serve the built frontend using a simple server
+    - cd ../frontend/dist
+    - python3 -m http.server 3000
+
+# Expose frontend and backend ports
+ports:
+  - port: 3000
+    name: frontend
+  - port: 8000
+    name: backend
+
+# Optional: Environment variables
+env:
+  - name: ENVIRONMENT
+    value: "production"
+  - name: API_URL
+    value: "http://localhost:8000"
