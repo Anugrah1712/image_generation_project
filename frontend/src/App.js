@@ -1,3 +1,5 @@
+// app.js
+
 import React, { useState } from "react";
 import "./App.css";
 import logo from "./logo.png"; // place logo.png inside src/
@@ -34,7 +36,7 @@ function App() {
 
     try {
       setLoading(true);
-      const response = await fetch("/generate", {
+      const response = await fetch("${BACKEND_URL}/generate", {
         method: "POST",
         body: formData,
       });
